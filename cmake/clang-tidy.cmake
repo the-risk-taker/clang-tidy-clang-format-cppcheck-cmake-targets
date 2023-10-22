@@ -9,7 +9,7 @@ else()
         COMMENT "Checking code with Clang-Tidy"
     )
 
-    add_custom_target(clang-tidy-fix COMMAND ${CLANG_TIDY} ${ALL_SOURCES} -p=${CMAKE_CURRENT_BINARY_DIR} -use-color -fix-errors
+    add_custom_target(clang-tidy-fix COMMAND ${CLANG_TIDY} ${ALL_SOURCES} -p=${CMAKE_CURRENT_BINARY_DIR} -use-color -fix-errors -format-style=file
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
         USES_TERMINAL
         COMMENT "Applying automatic fixes to code with Clang-Tidy"
@@ -23,13 +23,13 @@ find_program(RUN_CLANG_TIDY run-clang-tidy)
 if(NOT RUN_CLANG_TIDY)
     message(STATUS "Run-Clang-Tidy was not found, static-analysis targets are inaccessible")
 else()
-    add_custom_target(run-clang-tidy-check COMMAND ${RUN_CLANG_TIDY} -p=${CMAKE_CURRENT_BINARY_DIR} -format
+    add_custom_target(run-clang-tidy-check COMMAND ${RUN_CLANG_TIDY} -p=${CMAKE_CURRENT_BINARY_DIR} # -use-color
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
         USES_TERMINAL
         COMMENT "Checking code with run-clang-tidy (parallel)"
     )
 
-    add_custom_target(run-clang-tidy-fix COMMAND ${RUN_CLANG_TIDY} -p=${CMAKE_CURRENT_BINARY_DIR} -format -fix
+    add_custom_target(run-clang-tidy-fix COMMAND ${RUN_CLANG_TIDY} -p=${CMAKE_CURRENT_BINARY_DIR} -format -fix # -use-color
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
         USES_TERMINAL
         COMMENT "Applying automatic fixes to code with run-clang-tidy (parallel)"
