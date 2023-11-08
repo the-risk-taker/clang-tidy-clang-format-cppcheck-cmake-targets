@@ -20,6 +20,14 @@ jobs:
     - name: Install dependencies
       run: sudo apt install -y clang clang-tidy clang-format cppcheck ninja-build
 
+    - name: Print tools versions
+      run: |
+        g++ --version
+        clang++ --version
+        cmake --version
+        echo "Ninja" $(ninja --version)
+        cppcheck --version
+
     - name: Build under GCC
       run: |
         cmake -B ${{env.BUILD_DIR_GCC}} -G Ninja -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_CXX_COMPILER=g++
